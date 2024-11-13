@@ -128,23 +128,17 @@ class ProfileWebScraper:
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump({"profiles": self.profiles}, f, indent=2)
 
-def main():
+def scrape_website(url):
     try:
         openai_api_key = os.getenv("OPENAI_API_KEY")
-        url = input("Enter website URL to scrape: ")
         
         scraper = ProfileWebScraper(url, openai_api_key)
-        print("\nScraping website (maximum 50 pages)...")
-        scraper.scrape_website(max_pages=50)
-        
-        # Print final results
-        print("\nExtracted Profiles:")
-        print(json.dumps({"profiles": scraper.profiles}, indent=2))
+        scraper.scrape_website(max_pages=20)
+        json.dumps({"profiles": scraper.profiles}, indent=2)
             
     except KeyboardInterrupt:
         print("\nOperation interrupted by user.")
     except Exception as e:
         print(f"\nAn error occurred: {str(e)}")
 
-if __name__ == "__main__":
-    main()
+# scrape_website("https://analyticsindiamag.com/ai-highlights/100-most-influential-ai-leaders-in-india-2024/")
